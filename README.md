@@ -1,6 +1,6 @@
-==================================================
+
 🎬 JENNY VIDEO PLAYER - COMPLETE SETUP & USAGE GUIDE
-==================================================
+
 
 1. PROJECT FOLDER & FILE STRUCTURE
 Make sure your project folder contains these exact files:
@@ -72,4 +72,3 @@ Step 2: Start the Local Server
 * ← / →: Seek backward / forward 5 seconds
 * J / L: Seek backward / forward 10 seconds
 * ↑ / ↓: Volume Up / Down
-==================================================
