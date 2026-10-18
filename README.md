@@ -23,15 +23,17 @@ A. jenny-video-player/
 2. INSTALLATION & SETUP GUIDE
 
 Step 1: Install Python Requirements
-- Open your project folder in VS Code.
-- Open the built-in terminal (Terminal -> New Terminal).
+- Open your jenny-Video-player folder.
+- Open Terminal using right-click in a blank area.
 - Run the following command:
-  pip install -r requirements.txt
+  "pip install -r requirements.txt"
 
-Step 2: Start the Local Server
-- In the same terminal, run:
-  python app.py
-- You will see your PC Player URL (http://127.0.0.1:5000) and Mobile Remote IP.
+Step 2:
+- Then the second command is:
+  "python app.py"
+  Connect to the same Wi-Fi on your laptop or mobile, or connect your mobile hotspot to the laptop Wi-Fi.
+- open only pc link (http://127.0.0.1:5000)
+- then open video player. click to connect phone. then Scan QR and enjoy............
 
 ---
 
