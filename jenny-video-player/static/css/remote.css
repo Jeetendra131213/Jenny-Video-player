@@ -1,0 +1,311 @@
+:root {
+    --bg-black: #0b0c10;
+    --panel-gray: #16181d;
+    --cinema-red: #FF3B30;
+    --accent-glow: #FF6B6B;
+    --text-primary: #F0F2F5;
+    --text-secondary: #9BA1A6;
+    --border-color: rgba(255, 255, 255, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-primary);
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.remote-container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.remote-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 4px;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    color: var(--cinema-red);
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.badge.disconnected {
+    background: rgba(255, 59, 48, 0.2);
+    color: #FF3B30;
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.badge.connected {
+    background: rgba(40, 200, 64, 0.2);
+    color: #28c840;
+    border: 1px solid rgba(40, 200, 64, 0.3);
+}
+
+.card {
+    background: var(--panel-gray);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.media-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.time-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.time-progress-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--cinema-red);
+    height: 6px;
+}
+
+.playback-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.playback-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-main {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: var(--cinema-red);
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 59, 48, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.secondary-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.volume-control-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.volume-control-mobile input[type="range"] {
+    width: 80px;
+    accent-color: var(--cinema-red);
+}
+
+.btn-sm {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.speed-control-mobile {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.speed-control-mobile select {
+    background: var(--bg-black);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+
+/* Video Layout Control Card for Phone */
+.layout-card h3 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--cinema-red);
+}
+
+.layout-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.layout-btn {
+    flex: 1;
+    background: var(--bg-black);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.layout-btn.active {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: var(--cinema-red);
+    color: var(--cinema-red);
+}
+
+/* Ambient Card */
+.ambient-card h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: var(--cinema-red);
+}
+
+.ambient-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--bg-black);
+    border: 1px solid var(--border-color);
+    transition: .3s;
+    border-radius: 26px;
+}
+
+.slider-switch:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--text-secondary);
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider-switch {
+    background-color: var(--cinema-red);
+}
+
+input:checked + .slider-switch:before {
+    transform: translateX(24px);
+    background-color: #fff;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.mode-btn {
+    background: var(--bg-black);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.mode-btn.active {
+    background: rgba(255, 59, 48, 0.15);
+    border-color: var(--cinema-red);
+    color: var(--cinema-red);
+}
+
+.ambient-slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.ambient-slider-group input[type="range"] {
+    accent-color: var(--cinema-red);
+}

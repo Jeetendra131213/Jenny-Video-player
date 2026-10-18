@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jenny Remote</title>
+    <link rel="stylesheet" href="/static/css/remote.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+    <div class="remote-container">
+        <!-- Header status -->
+        <header class="remote-header">
+            <div class="brand">🎬 JENNY REMOTE</div>
+            <div id="connection-badge" class="badge disconnected">Disconnected</div>
+        </header>
+
+        <!-- Now Playing Card -->
+        <section class="card media-card">
+            <div class="media-title" id="remote-video-title">No video playing on PC</div>
+            <div class="time-progress-row">
+                <span id="remote-current-time">00:00</span>
+                <input type="range" id="remote-seek-slider" min="0" max="100" value="0" step="0.1">
+                <span id="remote-duration">00:00</span>
+            </div>
+        </section>
+
+        <!-- Primary Playback Controls -->
+        <section class="card playback-card">
+            <div class="playback-buttons">
+                <button id="r-seek-back" class="btn-icon">-10s</button>
+                <button id="r-play-pause" class="btn-main">▶</button>
+                <button id="r-seek-forward" class="btn-icon">+10s</button>
+            </div>
+            
+            <div class="secondary-controls">
+                <div class="volume-control-mobile">
+                    <button id="r-mute" class="btn-sm">🔊</button>
+                    <input type="range" id="remote-volume" min="0" max="1" value="1" step="0.05">
+                </div>
+                <div class="speed-control-mobile">
+                    <label>Speed:</label>
+                    <select id="remote-speed">
+                        <option value="0.5">0.5x</option>
+                        <option value="1.0" selected>1.0x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2.0">2.0x</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Size / Layout Control Card -->
+        <section class="card layout-card">
+            <h3>📺 Video Size / Layout</h3>
+            <div class="layout-buttons">
+                <button class="layout-btn active" data-layout="contain">Fit</button>
+                <button class="layout-btn" data-layout="cover">Zoom</button>
+                <button class="layout-btn" data-layout="fill">Stretch</button>
+            </div>
+        </section>
+
+        <!-- Ambient Light Control Hub -->
+        <section class="card ambient-card">
+            <h3>✨ Ambient Glow Control</h3>
+            <div class="ambient-row">
+                <span>Power</span>
+                <label class="switch">
+                    <input type="checkbox" id="r-ambient-on" checked>
+                    <span class="slider-switch"></span>
+                </label>
+            </div>
+            <div class="ambient-row">
+                <span>Mode</span>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" data-mode="soft">Soft</button>
+                    <button class="mode-btn" data-mode="vivid">Vivid</button>
+                </div>
+            </div>
+            <div class="ambient-slider-group">
+                <label>Intensity: <span id="r-intensity-label">75</span>%</label>
+                <input type="range" id="r-intensity" min="10" max="100" value="75">
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const pairingToken = "{{ token }}";
+    </script>
+    <script src="/static/js/remote.js"></script>
+</body>
+</html>

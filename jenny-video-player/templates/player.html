@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenny Video Player</title>
+    <link rel="stylesheet" href="/static/css/player.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+    <!-- Ambient Light Atmospheric Backdrop -->
+    <div id="ambient-container">
+        <canvas id="ambient-canvas"></canvas>
+    </div>
+
+    <!-- Main Player Wrapper -->
+    <div id="player-wrapper">
+        
+        <!-- Top Navigation Bar -->
+        <header id="top-nav" class="nav-visible">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="logo-icon">🎬</span>
+                    <span class="logo-text">JENNY <small>PLAYER</small></span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <input type="file" id="file-selector" accept="video/*" multiple style="display: none;">
+                <button id="btn-open" class="nav-btn">📁 Open Video</button>
+                <button id="btn-connect" class="nav-btn btn-highlight">📱 Connect Phone</button>
+                <button id="btn-settings" class="nav-btn">⚙️ Settings</button>
+            </div>
+        </header>
+
+        <!-- Central Video Area -->
+        <main id="video-area">
+            <div id="empty-state">
+                <div class="empty-content">
+                    <span class="empty-icon">🎥</span>
+                    <h2>No Video Loaded</h2>
+                    <p>Drop video files here or click Open Video to start watching in cinematic mode.</p>
+                    <button id="empty-open-btn" class="primary-btn">Select Video File</button>
+                    <button id="empty-connect-btn" class="secondary-btn">Connect Phone Remote</button>
+                </div>
+            </div>
+            <video id="video-player" playsinline></video>
+        </main>
+
+        <!-- Bottom Playback Controls Bar -->
+        <div id="controls-bar" class="controls-visible">
+            <!-- Seek Timeline with Visible Progress Fill -->
+            <div class="timeline-container">
+                <div id="seek-progress-fill"></div>
+                <input type="range" id="seek-slider" min="0" max="100" value="0" step="0.1">
+            </div>
+
+            <div class="controls-row">
+                <div class="controls-group">
+                    <button id="play-pause-btn" class="ctrl-btn" title="Play/Pause (Space)">▶</button>
+                    
+                    <div class="volume-wrapper">
+                        <button id="mute-btn" class="ctrl-btn" title="Mute (M)" style="border:none; background:transparent; width:auto; height:auto; box-shadow:none;">🔊</button>
+                        <input type="range" id="volume-slider" min="0" max="1" value="1" step="0.05">
+                    </div>
+
+                    <div class="time-display">
+                        <span id="current-time">00:00</span> / <span id="duration">00:00</span>
+                    </div>
+                </div>
+
+                <div class="controls-group title-group">
+                    <span id="current-video-title">Select a video to play</span>
+                </div>
+
+                <div class="controls-group">
+                    <!-- Video Size / Layout Selector -->
+                    <select id="layout-selector" class="ctrl-select" title="Video Size / Layout">
+                        <option value="contain">Fit (Contain)</option>
+                        <option value="cover">Zoom (Cover)</option>
+                        <option value="fill">Stretch (Fill)</option>
+                    </select>
+
+                    <!-- Ambient Light Quick Toggle -->
+                    <button id="ambient-toggle-btn" class="ctrl-btn active-glow" title="Toggle Ambient Light">✨</button>
+                    
+                    <!-- Speed Selector -->
+                    <select id="speed-selector" class="ctrl-select" title="Playback Speed">
+                        <option value="0.5">0.5x</option>
+                        <option value="1.0" selected>1.0x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2.0">2.0x</option>
+                    </select>
+
+                    <button id="fullscreen-btn" class="ctrl-btn" title="Fullscreen (F)">⛶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Connect Modal -->
+        <div id="connect-modal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <button class="modal-close" id="close-connect-modal">&times;</button>
+                <h2>Connect Mobile Remote</h2>
+                <p>Scan this QR code with your phone camera to control Jenny Video Player wirelessly over Wi-Fi.</p>
+                <div class="qr-container">
+                    <img id="qr-image" src="" alt="Pairing QR Code">
+                </div>
+                <div class="pairing-code-box">
+                    <span>Pairing Code: <strong id="pairing-code-text">----</strong></span>
+                </div>
+                <p class="status-indicator" id="connection-status">Waiting for device connection...</p>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal-overlay hidden">
+            <div class="modal-card settings-card">
+                <button class="modal-close" id="close-settings-modal">&times;</button>
+                <h2>Player Settings</h2>
+                
+                <div class="settings-section">
+                    <h3>✨ Ambient Light Configuration</h3>
+                    <div class="setting-row">
+                        <label>Enable Ambient Glow</label>
+                        <input type="checkbox" id="setting-ambient-on" checked>
+                    </div>
+                    <div class="setting-row">
+                        <label>Glow Mode</label>
+                        <select id="setting-ambient-mode" class="ctrl-select">
+                            <option value="soft">Soft Glow (Relaxed)</option>
+                            <option value="vivid">Vivid Glow (Cinematic)</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <label>Intensity (<span id="intensity-val">75</span>%)</label>
+                        <input type="range" id="setting-intensity" min="10" max="100" value="75" accent-color="#FF3B30">
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>⌨️ Keyboard Shortcuts Reference</h3>
+                    <ul class="shortcuts-list">
+                        <li><span>Space</span> Play / Pause</li>
+                        <li><span>F</span> Fullscreen</li>
+                        <li><span>M</span> Mute / Unmute</li>
+                        <li><span>← / →</span> Seek -/+ 5 sec</li>
+                        <li><span>J / L</span> Seek -/+ 10 sec</li>
+                        <li><span>↑ / ↓</span> Volume Up / Down</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/static/js/player.js"></script>
+</body>
+</html>
