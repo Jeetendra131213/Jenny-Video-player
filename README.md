@@ -4,18 +4,19 @@
 
 1. PROJECT FOLDER & FILE STRUCTURE
 Make sure your project folder contains these exact files:
-jenny-video-player/
-├── requirements.txt
-├── app.py
-├── templates/
-│   ├── player.html
-│   └── remote.html
-└── static/
-    ├── css/
-    │   └── player.css
-    └── js/
-        ├── player.js
-        └── remote.js
+A. jenny-video-player/
+ a. requirements.txt
+ b. app.py
+ c. templates/
+   c.1. player.html
+   c.2. remote.html
+ d. static/
+    d.1. css/
+        1.1. player.css
+        1.2. remote.css
+    d.2. js/
+        2.1. player.js
+        2.1. remote.js
 
 ---
 
